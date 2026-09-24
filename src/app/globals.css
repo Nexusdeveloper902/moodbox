@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* Tokens from Penpot "00 — Identidad" + "01 — Componentes" */
+@theme {
+  --color-ink: #2e2230;         /* Tinta */
+  --color-cocoa: #3b2a26;       /* headings on warm pages */
+  --color-coral: #f26b4f;       /* Coral */
+  --color-coral-dark: #d9553a;  /* pressed */
+  --color-cream: #fff7ef;       /* Crema: page background */
+  --color-kraft: #e3d3bc;       /* Kraft */
+  --color-paper: #fffdf8;       /* letters / notes */
+  --color-sand: #f7f4ef;        /* image tiles, text areas */
+  --color-oat: #f3ece2;         /* "Personaliza" banner */
+  --color-blush: #fff1ec;       /* selected tint */
+  --color-peach: #fbe3d6;
+  --color-line: #ede4da;        /* borders */
+  --color-muted: #6e6470;       /* body copy */
+  --color-subtle: #a39a92;      /* hints, disabled text */
+  --color-disabled: #ede7df;
+  --color-teal: #3bb8a6;
+  --color-teal-dark: #1e8a7a;
+  --color-teal-soft: #e3f5f2;
+  --color-honey: #ffc94a;
+  --color-honey-dark: #8a6100;
+  --color-honey-soft: #fff4d6;
+  --color-lilac-soft: #e6e8f5;
+  --color-danger: #d64545;
+  --color-danger-soft: #fbeceb;
+  --color-plum-muted: #cfc6d2;  /* secondary text on dark */
+
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  --shadow-card: 0 12px 30px rgb(59 42 38 / 0.07);
+  --shadow-soft: 0 4px 14px rgb(59 42 38 / 0.05);
+  --shadow-float: 0 20px 50px rgb(59 42 38 / 0.1);
+  --shadow-coral: 0 8px 18px rgb(242 107 79 / 0.2);
+  --shadow-selected: 0 12px 28px rgb(242 107 79 / 0.14);
+  --shadow-modal: 0 24px 60px rgb(59 42 38 / 0.18);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Per-box colors come from inline CSS variables (see lib/theme.ts). */
+@utility box-accent { color: var(--box-accent); }
+@utility bg-box-accent { background-color: var(--box-accent); }
+@utility box-ink { color: var(--box-ink); }
+@utility box-muted { color: var(--box-muted); }
+@utility bg-box-chip { background-color: var(--box-chip); }
+@utility bg-box-scene { background-color: var(--box-scene); }
+
+@utility focus-ring { @apply focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-coral/40; }
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-[17px] leading-[1.2] font-bold whitespace-nowrap transition focus-ring disabled:cursor-not-allowed;
+}
+@utility btn-primary { @apply btn bg-coral text-white shadow-coral hover:bg-coral-dark disabled:bg-disabled disabled:text-subtle disabled:shadow-none; }
+@utility btn-dark { @apply btn bg-ink text-white hover:bg-ink/90; }
+@utility btn-outline { @apply btn border-[1.5px] border-ink bg-white text-ink hover:bg-blush; }
+@utility btn-sm { @apply px-[14px] py-2 text-sm; }
+@utility chip {
+  @apply inline-flex items-center rounded-full border-[1.5px] border-line bg-white px-[18px] py-[10px] text-[15px] font-semibold whitespace-nowrap text-ink transition hover:border-ink;
+  &[aria-pressed="true"], &[aria-current="page"] { @apply border-ink bg-ink text-white; }
+}
+@utility card { @apply rounded-[28px] bg-white shadow-card; }
+@utility panel { @apply rounded-3xl border-[1.5px] border-line bg-white; }
+@utility kicker { @apply text-xs font-bold tracking-[2px] uppercase; }
+@utility h-display { @apply font-serif leading-[1.1] font-semibold text-cocoa; }
+@utility field {
+  @apply flex flex-col gap-2;
+  & > label { @apply text-sm font-bold text-ink; }
+}
+@utility label { @apply text-sm font-bold text-ink; }
+@utility input {
+  @apply h-[52px] w-full rounded-[14px] border-[1.5px] border-line bg-white px-4 text-base text-ink outline-none transition placeholder:text-subtle focus:border-2 focus:border-coral focus:shadow-[0_0_0_4px_rgb(242_107_79/0.15)];
+  &[aria-invalid="true"] { @apply border-2 border-danger; }
+}
+@utility field-error { @apply text-[13px] text-danger; }
+
+a, button, summary, input[type="checkbox"] { @apply focus-ring; }
+
+/* Page width: 1280px content inside the 1440px Penpot frames. */
+@utility wrap {
+  width: min(1280px, calc(100% - 40px));
+  margin-inline: auto;
+  @media (width >= 48rem) { width: min(1280px, calc(100% - 64px)); }
+}
+
+/* Shake used when trying to add to a full MoodBox. */
+@theme {
+  --animate-nudge: nudge 0.45s ease-in-out;
+}
+@keyframes nudge {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(7px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(3px); }
+}
