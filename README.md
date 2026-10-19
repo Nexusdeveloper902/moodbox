@@ -64,6 +64,10 @@ Routes: `/`, `/resultado`, `/moodbox`, `/moodbox/[slug]`, `/productos`, `/produc
   re-prices every line from the database, rejects sold-out or unknown items, and enforces the 6-item box limit.
 - **SQLite.** The app keeps one connection and uses WAL mode. That suits one server process; if you run several app
   instances, move to a database server. `data/` is gitignored, so run `npm run db:setup` after cloning.
+- **Vercel.** The filesystem is read-only and `data/` isn't deployed, so on Vercel `src/lib/db.ts` keeps the database in
+  `/tmp` and seeds it on each serverless instance's first request (schema + catalog + demo account; `db/schema.sql` is
+  bundled via `outputFileTracingIncludes`). Orders placed in production don't survive between instances — use a hosted
+  database if you need real persistence.
 - **Checkout.** Checkout requires an account. Payment is simulated. The last delivery address is saved to the profile
   and used to prefill the next order.
 - **Recommendation.** `src/lib/classify.ts` sends the "¿Cómo te sientes hoy?" text to DeepSeek (`deepseek-flash`, JSON
